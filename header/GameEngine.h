@@ -15,8 +15,7 @@ protected:
 	HBITMAP m_hBackGround;		//贴图素材声明
 	HBITMAP m_hCharacter[2];
 	DWORD m_tPre, m_tNow;	//总时间系
-	BOOL ch;
-
+	BOOL m_bCharacterNoMove;
 public:
 	//创建游戏引擎实例
 	GameEngine(HINSTANCE hInstance, LPTSTR szWindowClass,LPTSTR szTitle);	

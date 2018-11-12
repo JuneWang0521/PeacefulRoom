@@ -10,7 +10,6 @@ protected:
 	int m_ifridge;
 	int m_iTv;
 
-
 public:
 	Map();
 	~Map(){}
