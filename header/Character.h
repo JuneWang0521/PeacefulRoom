@@ -13,6 +13,7 @@ protected:
 	int m_iStayTime;
 	int m_iDirection;		//½ÇÉ«·½Ïò
 	int m_iPicNum;
+	int sahjndkls;
 
 public:
 	Character();
