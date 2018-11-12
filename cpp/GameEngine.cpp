@@ -7,6 +7,14 @@ GameEngine* GameEngine::m_pGameEngine = NULL;
 Map*Map::m_pMap = NULL;
 Character*Character::m_pCharacter = NULL;
 
+BOOL GameEngineInitial(HINSTANCE hInstance)
+{
+	GameEngine *g_pGame = new GameEngine(hInstance, L"WindowClass", WINDOW_TITLE);
+	if (g_pGame == NULL)
+		return FALSE;
+	return TRUE;
+}
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hpreInstance, LPSTR lpcmdline, int nShowCmd)
 {
 	MSG msg;
@@ -64,6 +72,7 @@ GameEngine::GameEngine(HINSTANCE hInstance, LPTSTR szWindowClass, LPTSTR szTitle
 	m_mdc = NULL ;
 	m_bufdc = NULL;
 	m_tPre=0, m_tNow=0;
+	m_bCharacterNoMove = false; //默认使地图卷轴移动
 }
 
 LRESULT GameEngine::HandleEvent(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -164,8 +173,13 @@ void GameEngine::GameMain()
 	/*
 
 	在这中间写逻辑代码改变数值，将在下次画时生效
-	
+
+	Character::GetCharacter()->SetCx(100);
+
 	*/
+
+	Character::GetCharacter()->CharacterMove();
+	Character::GetCharacter()->CharacterJump();
 
 	SelectObject(m_bufdc, m_hCharacter[Character::GetCharacter()->GetDirection()]);
 	TransparentBlt(m_mdc, Character::GetCharacter()->GetCx(), Character::GetCharacter()->GetCy(), 100, 150, m_bufdc, Character::GetCharacter()->GetPicNum() * 100, 0, 100, 150, RGB(255, 0, 0));

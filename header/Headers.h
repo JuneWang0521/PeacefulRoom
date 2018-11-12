@@ -28,4 +28,5 @@
 #define BGMOVESTEPS 10
 #define HAPPY 10
 #define EAT 10
-#define GRAVITY 3	
+#define GRAVITY 3
+#define SPEED 10
