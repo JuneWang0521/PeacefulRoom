@@ -7,6 +7,14 @@ GameEngine* GameEngine::m_pGameEngine = NULL;
 Map*Map::m_pMap = NULL;
 Character*Character::m_pCharacter = NULL;
 
+BOOL GameEngineInitial(HINSTANCE hInstance)
+{
+	GameEngine *g_pGame = new GameEngine(hInstance, L"WindowClass", WINDOW_TITLE);
+	if (g_pGame == NULL)
+		return FALSE;
+	return TRUE;
+}
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hpreInstance, LPSTR lpcmdline, int nShowCmd)
 {
 	MSG msg;
@@ -151,7 +159,7 @@ void GameEngine::TripleBuffering()
 
 void GameEngine::BitmapInit()
 {
-	m_hBackGround = (HBITMAP)LoadImage(NULL, L"bg2.bmp", IMAGE_BITMAP, WINDOW_WIDTH, WINDOW_HEIGHT, LR_LOADFROMFILE);
+	m_hBackGround = (HBITMAP)LoadImage(NULL, L"bg2.bmp", IMAGE_BITMAP,1600, WINDOW_HEIGHT, LR_LOADFROMFILE);
 	m_hCharacter[0] = (HBITMAP)LoadImage(NULL, L"1.bmp", IMAGE_BITMAP, 500, 150, LR_LOADFROMFILE);
 	m_hCharacter[1] = (HBITMAP)LoadImage(NULL, L"2.bmp", IMAGE_BITMAP, 500, 150, LR_LOADFROMFILE);
 }
@@ -166,6 +174,20 @@ void GameEngine::GameMain()
 	在这中间写逻辑代码改变数值，将在下次画时生效
 	
 	*/
+
+	wchar_t str[20] = {};
+	HFONT hFont;
+	hFont = CreateFont(30, 0, 0, 0, 0, 0, 0, 0, GB2312_CHARSET, 0, 0, 0, 0, TEXT("微软雅黑"));
+	SelectObject(m_mdc, hFont);
+	SetBkMode(m_mdc, TRANSPARENT);
+	SetTextColor(m_mdc, RGB(0, 0, 0));
+
+	swprintf_s(str, L"心情值为%d", Character::GetCharacter()->GetHappy());
+	TextOut(m_mdc, 0, 0, str, wcslen(str));
+	swprintf_s(str, L"饥饿值为%d", Character::GetCharacter()->GetEat());
+	TextOut(m_mdc, 0, 30, str, wcslen(str));
+
+	Character::GetCharacter()->CharacterAI();
 
 	SelectObject(m_bufdc, m_hCharacter[Character::GetCharacter()->GetDirection()]);
 	TransparentBlt(m_mdc, Character::GetCharacter()->GetCx(), Character::GetCharacter()->GetCy(), 100, 150, m_bufdc, Character::GetCharacter()->GetPicNum() * 100, 0, 100, 150, RGB(255, 0, 0));
