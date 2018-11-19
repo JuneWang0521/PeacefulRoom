@@ -7,13 +7,12 @@ class Character
 protected:
 	static Character * m_pCharacter;		//指向自身的指针，提供程序的外界访问
 	int m_iCx, m_iCy;		//角色坐标
-	int m_iCvy;	//角色速度
-	int m_iHappy;		//角色心情值
-	int m_iEat;		//角色饱食度
-	int m_iStayTime;
+	int m_iCvy;				//角色速度
+	int m_iHappy;			//角色心情值
+	int m_iEat;				//角色饱食度
+    int m_iStayTime;		
 	int m_iDirection;		//角色方向
 	int m_iPicNum;
-	int sahjndkls;
 
 public:
 	Character();
@@ -41,6 +40,8 @@ public:
 	void	CharacterHappy();
 	void	CharacterEat();	
 	void	CharacterAI();
+	void    CharacterMove();
+	void    CharacterJump();
 
 };
 BOOL CharacterInitial();

@@ -16,6 +16,7 @@ protected:
 	HBITMAP m_hCharacter[2];
 	DWORD m_tPre, m_tNow;	//总时间系
 	BOOL m_bCharacterNoMove;
+
 public:
 	//创建游戏引擎实例
 	GameEngine(HINSTANCE hInstance, LPTSTR szWindowClass,LPTSTR szTitle);	
@@ -32,6 +33,9 @@ public:
 	DWORD	GetNowTime() { return m_tNow; }
 	void		SetNowTime(DWORD tNow) { m_tNow = tNow; }
 
+	void   SetCharacterNoMove(BOOL CharacterNoMove) { m_bCharacterNoMove= CharacterNoMove; }
+	bool   GetCharacterNoMove() { return m_bCharacterNoMove; }
+
 	//窗口创建
 	BOOL	Initiallize(int cmdShow);	//初始化函数
 	LRESULT GameEngine::HandleEvent(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);	//消息处理
@@ -44,10 +48,3 @@ public:
 	void GameClear();
 };
 
-BOOL GameEngineInitial(HINSTANCE hInstance)
-{
-	GameEngine *g_pGame = new GameEngine(hInstance, L"WindowClass", WINDOW_TITLE);
-	if (g_pGame == NULL)
-		return FALSE;
-	return TRUE;
-}

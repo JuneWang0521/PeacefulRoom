@@ -72,6 +72,7 @@ GameEngine::GameEngine(HINSTANCE hInstance, LPTSTR szWindowClass, LPTSTR szTitle
 	m_mdc = NULL ;
 	m_bufdc = NULL;
 	m_tPre=0, m_tNow=0;
+	m_bCharacterNoMove = false; //默认使地图卷轴移动
 }
 
 LRESULT GameEngine::HandleEvent(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -172,8 +173,13 @@ void GameEngine::GameMain()
 	/*
 
 	在这中间写逻辑代码改变数值，将在下次画时生效
-	
+
+	Character::GetCharacter()->SetCx(100);
+
 	*/
+
+	Character::GetCharacter()->CharacterMove();
+	Character::GetCharacter()->CharacterJump();
 
 	wchar_t str[20] = {};
 	HFONT hFont;
