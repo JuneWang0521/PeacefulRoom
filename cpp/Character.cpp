@@ -8,10 +8,10 @@ Character::Character()
 {
 	m_pCharacter = this;
 	m_iCx = 322, m_iCy = 419;
-	m_iHappy = 0;
-	m_iEat = 0;
+	m_iHappy = 100;
+	m_iEat = 100;
 	m_iStayTime=0;
-	m_iDirection = 1;
+	m_iDirection = 1;   // 转向设置未左0右1.
 	m_iCvy = 0;
 	m_iPicNum = 0;
 
@@ -21,6 +21,25 @@ Character::Character()
 //{
 //	
 //}
+
+void Character::CharacterMood()
+{
+	
+	if (GameEngine::GetEngine()->GetNowTime() - GameEngine::GetEngine()->GetCharacterPre() > 10000)		//设定动画帧数
+	{
+		if (m_iHappy != 0)
+		{
+			m_iHappy--;
+		}
+
+		if (m_iEat != 0) {
+			m_iEat--;
+		}
+		GameEngine::GetEngine()->SetCharacterPre(GetTickCount());
+	}
+
+}
+
 
 void Character::CharacterJump()
 {
@@ -62,6 +81,21 @@ void Character::CharacterJump()
 
 	}
 }
+
+
+//这个方法来根据角色的按键来改变角色的朝向，默认是1，即向右方向。
+void Character::CharacterDirection()
+{
+	if ((KEYDOWN(68) || KEYDOWN(100)))
+	{
+		m_iDirection = 1;
+	}
+	else if((KEYDOWN(65) || KEYDOWN(97)))
+	{
+		m_iDirection = 0;
+	}
+}
+
 
 void Character::CharacterMove()
 {

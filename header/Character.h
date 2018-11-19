@@ -42,6 +42,8 @@ public:
 	void	CharacterAI();
 	void    CharacterMove();
 	void    CharacterJump();
+	void	CharacterDirection();
+	void    CharacterMood();
 
 };
 BOOL CharacterInitial();

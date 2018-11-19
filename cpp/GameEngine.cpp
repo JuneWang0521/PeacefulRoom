@@ -72,6 +72,7 @@ GameEngine::GameEngine(HINSTANCE hInstance, LPTSTR szWindowClass, LPTSTR szTitle
 	m_mdc = NULL ;
 	m_bufdc = NULL;
 	m_tPre=0, m_tNow=0;
+	m_tCharcterPre= 0;
 	m_bCharacterNoMove = false; //默认使地图卷轴移动
 }
 
@@ -145,6 +146,7 @@ BOOL GameEngine::GameInit()
 	BitmapInit();
 	//绘图
 	GameMain();
+	m_tCharcterPre = GetTickCount();
 	return TRUE;
 }
 
@@ -180,6 +182,8 @@ void GameEngine::GameMain()
 
 	Character::GetCharacter()->CharacterMove();
 	Character::GetCharacter()->CharacterJump();
+	Character::GetCharacter()->CharacterDirection();
+	Character::GetCharacter()->CharacterMood();
 
 	wchar_t str[20] = {};
 	HFONT hFont;
@@ -192,8 +196,6 @@ void GameEngine::GameMain()
 	TextOut(m_mdc, 0, 0, str, wcslen(str));
 	swprintf_s(str, L"饥饿值为%d", Character::GetCharacter()->GetEat());
 	TextOut(m_mdc, 0, 30, str, wcslen(str));
-
-	Character::GetCharacter()->CharacterAI();
 
 	SelectObject(m_bufdc, m_hCharacter[Character::GetCharacter()->GetDirection()]);
 	TransparentBlt(m_mdc, Character::GetCharacter()->GetCx(), Character::GetCharacter()->GetCy(), 100, 150, m_bufdc, Character::GetCharacter()->GetPicNum() * 100, 0, 100, 150, RGB(255, 0, 0));

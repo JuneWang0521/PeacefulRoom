@@ -15,6 +15,7 @@ protected:
 	HBITMAP m_hBackGround;		//贴图素材声明
 	HBITMAP m_hCharacter[2];
 	DWORD m_tPre, m_tNow;	//总时间系
+	DWORD m_tCharcterPre;   //角色单独的时间系
 	BOOL m_bCharacterNoMove;
 
 public:
@@ -32,6 +33,9 @@ public:
 	void		SetPreTime(DWORD tPre) {m_tPre=tPre; }
 	DWORD	GetNowTime() { return m_tNow; }
 	void		SetNowTime(DWORD tNow) { m_tNow = tNow; }
+	DWORD   GetCharacterPre() {return m_tCharcterPre;}
+	void		SetCharacterPre(DWORD CharacterPre) { m_tCharcterPre=CharacterPre; }
+
 
 	void   SetCharacterNoMove(BOOL CharacterNoMove) { m_bCharacterNoMove= CharacterNoMove; }
 	bool   GetCharacterNoMove() { return m_bCharacterNoMove; }
