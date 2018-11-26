@@ -8,10 +8,10 @@ Character::Character()
 {
 	m_pCharacter = this;
 	m_iCx = 322, m_iCy = 419;
-	m_iHappy = 0;
-	m_iEat = 0;
+	m_iHappy = 100;
+	m_iEat = 100;
 	m_iStayTime=0;
-	m_iDirection = 1;
+	m_iDirection = 1;   // 转向设置未左0右1.
 	m_iCvy = 0;
 	m_iPicNum = 0;
 
@@ -21,6 +21,73 @@ Character::Character()
 //{
 //	
 //}
+
+void Character::CharacterMood()
+{
+	
+	if (GameEngine::GetEngine()->GetNowTime() - GameEngine::GetEngine()->GetCharacterPre() > 100)		//设定动画帧数
+	{
+		if (m_iHappy != 0)
+		{
+			m_iHappy--;
+		}
+
+		if (m_iEat != 0) {
+			m_iEat--;
+		}
+
+		if (m_iHappy < 30)
+		{
+			GameEngine::GetEngine()->SetColor(255);
+		}
+
+		if (m_iEat < 30)
+		{
+			GameEngine::GetEngine()->SetColor(255);
+		}
+
+		if (m_iHappy >= 30)
+		{
+			GameEngine::GetEngine()->SetColor(0);
+		}
+
+		if (m_iEat >= 30)
+		{
+			GameEngine::GetEngine()->SetColor(0);
+		}
+
+
+		GameEngine::GetEngine()->SetCharacterPre(GetTickCount());
+	}
+
+}
+
+void Character::AddFoodandHappy()
+{
+	if (KEYDOWN(VK_RETURN))
+	{
+		if (m_iHappy+10 <= 100)
+		{
+			m_iHappy+=10;
+		}
+		else
+		{
+			m_iHappy = 100;
+		}
+
+		if (m_iEat + 10 <= 100) {
+
+			m_iEat += 10;
+		
+		}
+		else
+		{
+			m_iEat = 100;
+		}
+
+	}
+}
+
 
 void Character::CharacterJump()
 {
@@ -63,6 +130,42 @@ void Character::CharacterJump()
 	}
 }
 
+
+//这个方法来根据角色的按键来改变角色的朝向并且不断切换动作，默认是1，即向右方向。
+void Character::CharacterDirection()
+{
+	if ((KEYDOWN(68) || KEYDOWN(100)))
+	{
+		m_iDirection = 1;
+		
+		
+		m_iPicNum++;
+
+		if (m_iPicNum == 4)
+		{
+			m_iPicNum = 0;
+		}
+
+	}
+
+
+	else if((KEYDOWN(65) || KEYDOWN(97)))
+	{
+		m_iDirection = 0;
+
+		m_iPicNum++;
+
+		if (m_iPicNum == 4)
+		{
+			m_iPicNum = 0;
+		}
+
+
+
+	}
+}
+
+
 void Character::CharacterMove()
 {
 
@@ -79,9 +182,7 @@ void Character::CharacterMove()
 			if ((m_iCx += SPEED) >WINDOW_WIDTH-110)
 			{
 				m_iCx = WINDOW_WIDTH-110;
-				
 			}
-			GameEngine::GetEngine()->SetCharacterNoMove(FALSE); //zeng 改动点
 		}
 
 		//角色在中轴线以右，向左移动，但未过中位线
@@ -90,23 +191,23 @@ void Character::CharacterMove()
 			if (m_iCx - SPEED > t_iMiddle)
 			{
 				m_iCx -= SPEED;
-				GameEngine::GetEngine()->SetCharacterNoMove(FALSE);  //zeng 改动点
 			
 			}
 			else
 			{
 				m_iCx = t_iMiddle;
 				
-				GameEngine::GetEngine()->SetCharacterNoMove(TRUE); //zeng 改动点 //为TURE时地图开始动
+				GameEngine::GetEngine()->SetCharacterNoMove(TRUE);
+
 
 			}
-
 		}
 	}
 	
 	//2018.11.12 complete
 	if(t_iBoundary==0)//假如角色左侧到达边界
 	{
+
 		//角色在中轴线以左，向左移动。
 		if (m_iCx <= t_iMiddle && (KEYDOWN(65) || KEYDOWN(97)))
 		{
@@ -114,7 +215,6 @@ void Character::CharacterMove()
 			{
 				m_iCx = 0;
 			}
-			GameEngine::GetEngine()->SetCharacterNoMove(FALSE);  //zeng 改动点
 		}
 
 		//角色在中轴线以左，向右移动，但未过中轴线。
@@ -123,15 +223,17 @@ void Character::CharacterMove()
 			if((m_iCx + SPEED)< t_iMiddle) // 预判向右移动的时候是否过中位线
 			{
 				m_iCx += SPEED;
-				GameEngine::GetEngine()->SetCharacterNoMove(FALSE);  //zeng 改动点
+		
 			}
 			else {
 				m_iCx = t_iMiddle;
-				GameEngine::GetEngine()->SetCharacterNoMove(TRUE);    //zeng 改动点  //这里已经经过了中位线//为TURE时地图开始动
+				GameEngine::GetEngine()->SetCharacterNoMove(TRUE);      //这里已经经过了中位线
+				
 			}
-			
 		}
-	}	
+		
+	}
+
 }
 
 

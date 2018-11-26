@@ -42,7 +42,9 @@ public:
 	void	CharacterAI();
 	void    CharacterMove();
 	void    CharacterJump();
-
+	void	CharacterDirection();
+	void    CharacterMood();
+	void    AddFoodandHappy();
 
 };
 BOOL CharacterInitial();
