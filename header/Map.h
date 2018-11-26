@@ -10,17 +10,20 @@ protected:
 	int m_ifridge;
 	int m_iTv;
 	int m_iMapWidth;
+	int m_iMx;
 
 
 public:
 	Map();
-	~Map(){}
+	~Map() {}
 
 	static    Map* GetMap() { return m_pMap; }
 	int GetBGposition() { return m_iBGposition; }
-	void SetBGposition(int BGposition) { m_iBGposition = BGposition ; }
-	int GetMapWidth(){return m_iMapWidth;}
+	void SetBGposition(int BGposition) { m_iBGposition = BGposition; }
+	int GetMapWidth() { return m_iMapWidth; }
 	void SetMapWidth(int MapWidth) { m_iMapWidth = MapWidth; }
+	//地图移动方法 （曾皓彦）
+	void MapMove();
 };
 
 BOOL MapInitial();

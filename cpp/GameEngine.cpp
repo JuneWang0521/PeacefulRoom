@@ -186,6 +186,7 @@ void GameEngine::GameMain()
 	Character::GetCharacter()->CharacterDirection();
 	Character::GetCharacter()->CharacterMood();
 	Character::GetCharacter()->AddFoodandHappy();
+	Map::GetMap()->MapMove();
 
 	wchar_t str[20] = {};
 	HFONT hFont;

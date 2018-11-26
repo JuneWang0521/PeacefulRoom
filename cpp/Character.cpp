@@ -183,6 +183,9 @@ void Character::CharacterMove()
 			{
 				m_iCx = WINDOW_WIDTH-110;
 			}
+
+			GameEngine::GetEngine()->SetCharacterNoMove(FALSE); //zeng 改动点
+
 		}
 
 		//角色在中轴线以右，向左移动，但未过中位线
@@ -191,13 +194,14 @@ void Character::CharacterMove()
 			if (m_iCx - SPEED > t_iMiddle)
 			{
 				m_iCx -= SPEED;
-			
+				GameEngine::GetEngine()->SetCharacterNoMove(FALSE);  //zeng 改动点
 			}
 			else
 			{
 				m_iCx = t_iMiddle;
 				
 				GameEngine::GetEngine()->SetCharacterNoMove(TRUE);
+
 
 
 			}
@@ -215,6 +219,9 @@ void Character::CharacterMove()
 			{
 				m_iCx = 0;
 			}
+
+			GameEngine::GetEngine()->SetCharacterNoMove(FALSE);  //zeng 改动点
+
 		}
 
 		//角色在中轴线以左，向右移动，但未过中轴线。
@@ -223,11 +230,12 @@ void Character::CharacterMove()
 			if((m_iCx + SPEED)< t_iMiddle) // 预判向右移动的时候是否过中位线
 			{
 				m_iCx += SPEED;
-		
+				GameEngine::GetEngine()->SetCharacterNoMove(FALSE);  //zeng 改动点
 			}
 			else {
 				m_iCx = t_iMiddle;
 				GameEngine::GetEngine()->SetCharacterNoMove(TRUE);      //这里已经经过了中位线
+
 				
 			}
 		}
