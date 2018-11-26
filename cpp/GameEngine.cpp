@@ -71,9 +71,7 @@ GameEngine::GameEngine(HINSTANCE hInstance, LPTSTR szWindowClass, LPTSTR szTitle
 	m_hdc = NULL;
 	m_mdc = NULL ;
 	m_bufdc = NULL;
-	m_iColor =  0 ;
-	m_tPre = GetTickCount(), m_tNow = GetTickCount();
-	m_tCharcterPre = GetTickCount();
+	m_tPre=0, m_tNow=0;
 	m_bCharacterNoMove = false; //默认使地图卷轴移动
 }
 
@@ -147,7 +145,6 @@ BOOL GameEngine::GameInit()
 	BitmapInit();
 	//绘图
 	GameMain();
-	m_tCharcterPre = GetTickCount();
 	return TRUE;
 }
 
@@ -183,16 +180,14 @@ void GameEngine::GameMain()
 
 	Character::GetCharacter()->CharacterMove();
 	Character::GetCharacter()->CharacterJump();
-	Character::GetCharacter()->CharacterDirection();
-	Character::GetCharacter()->CharacterMood();
-	Character::GetCharacter()->AddFoodandHappy();
+	Map::GetMap()->MapMove();
 
 	wchar_t str[20] = {};
 	HFONT hFont;
 	hFont = CreateFont(30, 0, 0, 0, 0, 0, 0, 0, GB2312_CHARSET, 0, 0, 0, 0, TEXT("微软雅黑"));
 	SelectObject(m_mdc, hFont);
 	SetBkMode(m_mdc, TRANSPARENT);
-	SetTextColor(m_mdc, RGB(m_iColor, 0, 0));
+	SetTextColor(m_mdc, RGB(0, 0, 0));
 
 	swprintf_s(str, L"心情值为%d", Character::GetCharacter()->GetHappy());
 	TextOut(m_mdc, 0, 0, str, wcslen(str));
