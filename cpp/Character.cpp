@@ -25,7 +25,7 @@ Character::Character()
 void Character::CharacterMood()
 {
 	
-	if (GameEngine::GetEngine()->GetNowTime() - GameEngine::GetEngine()->GetCharacterPre() > 10000)		//设定动画帧数
+	if (GameEngine::GetEngine()->GetNowTime() - GameEngine::GetEngine()->GetCharacterPre() > 100)		//设定动画帧数
 	{
 		if (m_iHappy != 0)
 		{
@@ -35,9 +35,57 @@ void Character::CharacterMood()
 		if (m_iEat != 0) {
 			m_iEat--;
 		}
+
+		if (m_iHappy < 30)
+		{
+			GameEngine::GetEngine()->SetColor(255);
+		}
+
+		if (m_iEat < 30)
+		{
+			GameEngine::GetEngine()->SetColor(255);
+		}
+
+		if (m_iHappy >= 30)
+		{
+			GameEngine::GetEngine()->SetColor(0);
+		}
+
+		if (m_iEat >= 30)
+		{
+			GameEngine::GetEngine()->SetColor(0);
+		}
+
+
 		GameEngine::GetEngine()->SetCharacterPre(GetTickCount());
 	}
 
+}
+
+void Character::AddFoodandHappy()
+{
+	if (KEYDOWN(VK_RETURN))
+	{
+		if (m_iHappy+10 <= 100)
+		{
+			m_iHappy+=10;
+		}
+		else
+		{
+			m_iHappy = 100;
+		}
+
+		if (m_iEat + 10 <= 100) {
+
+			m_iEat += 10;
+		
+		}
+		else
+		{
+			m_iEat = 100;
+		}
+
+	}
 }
 
 
@@ -83,16 +131,37 @@ void Character::CharacterJump()
 }
 
 
-//这个方法来根据角色的按键来改变角色的朝向，默认是1，即向右方向。
+//这个方法来根据角色的按键来改变角色的朝向并且不断切换动作，默认是1，即向右方向。
 void Character::CharacterDirection()
 {
 	if ((KEYDOWN(68) || KEYDOWN(100)))
 	{
 		m_iDirection = 1;
+		
+		
+		m_iPicNum++;
+
+		if (m_iPicNum == 4)
+		{
+			m_iPicNum = 0;
+		}
+
 	}
+
+
 	else if((KEYDOWN(65) || KEYDOWN(97)))
 	{
 		m_iDirection = 0;
+
+		m_iPicNum++;
+
+		if (m_iPicNum == 4)
+		{
+			m_iPicNum = 0;
+		}
+
+
+
 	}
 }
 

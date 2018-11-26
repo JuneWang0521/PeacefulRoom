@@ -17,6 +17,7 @@ protected:
 	DWORD m_tPre, m_tNow;	//总时间系
 	DWORD m_tCharcterPre;   //角色单独的时间系
 	BOOL m_bCharacterNoMove;
+	int m_iColor;
 
 public:
 	//创建游戏引擎实例
@@ -35,7 +36,8 @@ public:
 	void		SetNowTime(DWORD tNow) { m_tNow = tNow; }
 	DWORD   GetCharacterPre() {return m_tCharcterPre;}
 	void		SetCharacterPre(DWORD CharacterPre) { m_tCharcterPre=CharacterPre; }
-
+	int		GetColor() { return m_iColor; }
+	void		SetColor(int Color) { m_iColor = Color; }
 
 	void   SetCharacterNoMove(BOOL CharacterNoMove) { m_bCharacterNoMove= CharacterNoMove; }
 	bool   GetCharacterNoMove() { return m_bCharacterNoMove; }

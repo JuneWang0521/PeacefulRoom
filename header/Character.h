@@ -44,6 +44,7 @@ public:
 	void    CharacterJump();
 	void	CharacterDirection();
 	void    CharacterMood();
+	void    AddFoodandHappy();
 
 };
 BOOL CharacterInitial();
