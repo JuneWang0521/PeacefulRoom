@@ -7,7 +7,7 @@ Map::Map()
 	m_iBGposition = 0;
 	m_ifridge=0;
 	m_iTv=0;
-	m_iMapWidth = 800;
+	m_iMapWidth = 600;
 }
 
 BOOL MapInitial()
